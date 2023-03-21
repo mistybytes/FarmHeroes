@@ -1,0 +1,34 @@
+{
+    "name": "InputMenager",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "3133694b-aa18-4222-bc7c-3d90aa9ad393",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "d66b7dae-c5c7-45ba-bef9-d85307fc1deb",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a6ee3990-20ee-4613-9743-a0c4046a9794",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

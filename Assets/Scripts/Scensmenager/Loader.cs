@@ -12,8 +12,9 @@ public static class Loader
     {
         Village,
         Loading,
-        Possession,
-        Farm
+        Possesion,
+        Farm,
+        Field
 
     }
 

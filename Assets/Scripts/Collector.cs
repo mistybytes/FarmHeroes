@@ -23,7 +23,6 @@ public class Collector : MonoBehaviour
 
     IEnumerator EnableTimedBonus()
     {
-        Debug.Log("Co tu siê wyprawia");
         while (true)
         {
             yield return new WaitForSeconds(1);

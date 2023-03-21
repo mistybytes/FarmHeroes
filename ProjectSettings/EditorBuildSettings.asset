@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Loading.unity
     guid: 2e3ba0254a7cc16459ad0e0c611b846c
   - enabled: 1
-    path: Assets/Scenes/Possession.unity
+    path: Assets/Scenes/Possesion.unity
     guid: bfb4686365811794c9d47fd73851f459
+  - enabled: 1
+    path: Assets/Scenes/Field.unity
+    guid: 23a09753f9b6a3641b1e3484be4ed0d8
   m_configObjects: {}

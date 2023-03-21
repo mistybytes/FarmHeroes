@@ -1,24 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class FarmButton : MonoBehaviour
 {
-    public Button button;
-
-    private void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        button = button.GetComponent<Button>();
-        button.onClick.AddListener(LoadScene);
-    }
-
-    private void LoadScene()
-    {
-        Loader.Load(Loader.Scene.Farm);
+        if (other.gameObject.tag == "Player")
+        {
+            Loader.Load(Loader.Scene.Farm);
+        }
     }
 
 }

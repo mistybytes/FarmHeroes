@@ -8,16 +8,12 @@ using UnityEngine.UI;
 
 public class VillageButton : MonoBehaviour
 {
-    public Button button;
 
-    private void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        button = button.GetComponent<Button>();
-        button.onClick.AddListener(LoadScene);
-    }
-
-    private void LoadScene()
-    {
-        Loader.Load(Loader.Scene.Village);
+        if (other.gameObject.tag == "Player")
+        {
+            Loader.Load(Loader.Scene.Village);
+        }
     }
 }

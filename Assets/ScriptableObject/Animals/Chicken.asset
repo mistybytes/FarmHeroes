@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5fbe5c361e0ca64395037d4225a424e, type: 3}
+  m_Name: Chicken
+  m_EditorClassIdentifier: 
+  id: 0
+  animalName: Chicken
+  basicHealth: 100
+  basicSpeed: 50
+  basicPower: 20
+  basicFocus: 40
+  star: 1
+  level: 1
+  rarity: 0
+  animalType: 0
+  icon: {fileID: 21300000, guid: a8ef54f2e7f472f438ad4647ff9f07f7, type: 3}
+  model: {fileID: 5930552653868306640, guid: 6f62df985684c5b49a1db56d9e59ae72, type: 3}
