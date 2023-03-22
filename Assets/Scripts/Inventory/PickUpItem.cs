@@ -13,7 +13,5 @@ public class PickUpItem : MonoBehaviour
             InventoryMenager.Instance.Add(Item);
             Item.value = 0;
         }
-
-        var cos = InventoryMenager.Instance.Items;
     }
 }

@@ -1,9 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
-using UnityEditor.UIElements;
 
 public class InventoryMenager : MonoBehaviour
 {
@@ -25,40 +22,48 @@ public class InventoryMenager : MonoBehaviour
 
     public Transform ItemContent;
     public GameObject InventoryItem;
+    private bool NewItem = false;
 
 
     private void Awake()
     {
         Instance = this;
+
     }
 
-    public void Add (Item item)
+    private void Update()
     {
-
-        if (Items.Contains(item))
+        if (NewItem)
         {
-            foreach (Item inventoryItem in Items)
-            {
-                if (item.itemName == inventoryItem.itemName && item.rarity == inventoryItem.rarity)
-                {
-                    item.value += item.value;
-                }
-            }
+            ListItems();
+            NewItem = false;
         }
-        else
+    }
+
+    public void Add (Item newItem)
+    {
+        Item backpackItem = Items.Find(item => item.id == newItem.id);
+
+        if (backpackItem == null && newItem.value > 0)
         {
-            Item newItem = new Item()
+            Item item = new Item()
             {
-                id = item.id,
-                itemName = item.itemName,
-                value = item.value,
-                icon = item.icon,
-                rarity = item.rarity,
+                id = newItem.id,
+                itemName = newItem.name,
+                value = newItem.value,
+                icon = newItem.icon,
+                rarity = newItem.rarity,
             };
 
-            Items.Add(newItem);
+            Items.Add(item);
         }
+        else if (newItem.value > 0)
+        {
+            backpackItem.value += newItem.value;
+        }
+        NewItem = true;
     }
+
 
     public void Add (Animal animal) 
     {
@@ -103,16 +108,32 @@ public class InventoryMenager : MonoBehaviour
 
         foreach (Item item in Items)
         {
-            GameObject obj = Instantiate(InventoryItem, ItemContent);
-            
-            Text itemName = obj.transform.Find("ItemName").GetComponent<Text>();
-            Image itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
-            Text itemCount = obj.transform.Find("ItemCount").GetComponent<Text>();
+            int slotCaunt = 30;
+            int backpackItemCaunt = item.value;
 
-            
-            itemName.text = item.itemName;
-            itemIcon.sprite = item.icon;
-            itemCount.text = item.value.ToString();
+            while (backpackItemCaunt > slotCaunt)
+            {
+                backpackItemCaunt -= slotCaunt;
+
+                GameObject obj = Instantiate(InventoryItem, ItemContent);
+                Text itemName = obj.transform.Find("ItemName").GetComponent<Text>();
+                Image itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
+                Text itemCount = obj.transform.Find("ItemCount").GetComponent<Text>();
+
+                itemName.text = item.itemName;
+                itemIcon.sprite = item.icon;
+                itemCount.text = slotCaunt.ToString();
+            }
+
+            GameObject objR = Instantiate(InventoryItem, ItemContent);
+            Text itemNameR = objR.transform.Find("ItemName").GetComponent<Text>();
+            Image itemIconR = objR.transform.Find("ItemIcon").GetComponent<Image>();
+            Text itemCountR = objR.transform.Find("ItemCount").GetComponent<Text>();
+
+            itemNameR.text = item.itemName;
+            itemIconR.sprite = item.icon;
+            itemCountR.text = backpackItemCaunt.ToString();
+
 
         }
     }
