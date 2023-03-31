@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +15,7 @@ public class InventoryMenager : MonoBehaviour
 
 
     public static InventoryMenager Instance;
-    public List<Item> Items = new List<Item>();
-    public List<Animal> Animals = new List<Animal>();
+    public Inventory Inventory;
 
 
     public Transform ItemContent;
@@ -31,6 +29,11 @@ public class InventoryMenager : MonoBehaviour
 
     }
 
+    public void newItem()
+    {
+        NewItem = true;
+    }
+
     private void Update()
     {
         if (NewItem)
@@ -40,34 +43,9 @@ public class InventoryMenager : MonoBehaviour
         }
     }
 
-    public void Add (Item newItem)
-    {
-        Item backpackItem = Items.Find(item => item.id == newItem.id);
-
-        if (backpackItem == null && newItem.value > 0)
-        {
-            Item item = new Item()
-            {
-                id = newItem.id,
-                itemName = newItem.name,
-                value = newItem.value,
-                icon = newItem.icon,
-                rarity = newItem.rarity,
-            };
-
-            Items.Add(item);
-        }
-        else if (newItem.value > 0)
-        {
-            backpackItem.value += newItem.value;
-        }
-        NewItem = true;
-    }
-
-
     public void Add (Animal animal) 
     {
-        Animals.Add(animal);
+        Inventory.Animals.Add(animal);
     }
 
     public void Remove (Item item)
@@ -76,7 +54,7 @@ public class InventoryMenager : MonoBehaviour
     }
     public void Remove(Animal animal)
     {
-        Animals.Remove(animal);
+        Inventory.Animals.Remove(animal);
     }
 
     public void ListAnimals()
@@ -86,7 +64,7 @@ public class InventoryMenager : MonoBehaviour
             Destroy(item.gameObject);
         }
 
-        foreach (Animal animal in Animals)
+        foreach (Animal animal in Inventory.Animals)
         {
             GameObject obj = Instantiate(InventoryItem, ItemContent);
 
@@ -106,36 +84,33 @@ public class InventoryMenager : MonoBehaviour
             Destroy(item.gameObject);
         }
 
-        foreach (Item item in Items)
+        foreach (Item item in Inventory.Items)
         {
-            int slotCaunt = 30;
-            int backpackItemCaunt = item.value;
-
-            while (backpackItemCaunt > slotCaunt)
+            if (item.value > 0)
             {
-                backpackItemCaunt -= slotCaunt;
+                int slotCaunt = 30;
+                int backpackItemCaunt = item.value;
 
-                GameObject obj = Instantiate(InventoryItem, ItemContent);
-                Text itemName = obj.transform.Find("ItemName").GetComponent<Text>();
-                Image itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
-                Text itemCount = obj.transform.Find("ItemCount").GetComponent<Text>();
+                while (backpackItemCaunt > slotCaunt)
+                {
+                    backpackItemCaunt -= slotCaunt;
+                    NewSlot(item, slotCaunt);
+                }
 
-                itemName.text = item.itemName;
-                itemIcon.sprite = item.icon;
-                itemCount.text = slotCaunt.ToString();
+                NewSlot(item, backpackItemCaunt);
             }
-
-            GameObject objR = Instantiate(InventoryItem, ItemContent);
-            Text itemNameR = objR.transform.Find("ItemName").GetComponent<Text>();
-            Image itemIconR = objR.transform.Find("ItemIcon").GetComponent<Image>();
-            Text itemCountR = objR.transform.Find("ItemCount").GetComponent<Text>();
-
-            itemNameR.text = item.itemName;
-            itemIconR.sprite = item.icon;
-            itemCountR.text = backpackItemCaunt.ToString();
-
-
         }
     }
 
+    public void NewSlot(Item item, int slotCaunt)
+    {
+        GameObject obj = Instantiate(InventoryItem, ItemContent);
+        Text itemName = obj.transform.Find("ItemName").GetComponent<Text>();
+        Image itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
+        Text itemCount = obj.transform.Find("ItemCount").GetComponent<Text>();
+
+        itemName.text = item.itemName;
+        itemIcon.sprite = item.icon;
+        itemCount.text = slotCaunt.ToString();
+    }
 }

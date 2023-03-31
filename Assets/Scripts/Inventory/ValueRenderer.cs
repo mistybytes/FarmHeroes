@@ -3,26 +3,19 @@ using UnityEngine;
 
 public class ValueRenderer : MonoBehaviour
 {
-    public Item item;
    
     public GameObject Unit, Tens, Value;
     public GameObject[] numbers;
-
+    public PickUpItem Item;
     private int _unit;
 
 
-    private void Start()
-    {
-        _unit = item.value;
-        StartCoroutine(EnableTimedBonus());
-    }
-
     private void Update()
     {
-        if (item.value != _unit)
+        if (Item.GetValue() != _unit)
         {
-            int tens = item.value / 10;
-            int unit = item.value % 10;
+            int tens = Item.GetValue() / 10;
+            int unit = Item.GetValue() % 10;
             Replace(Unit, numbers[unit], true);
             Replace(Tens, numbers[tens], false);
         }
@@ -39,18 +32,6 @@ public class ValueRenderer : MonoBehaviour
         else
         {
             Tens = number;
-        }
-    }
-
-    IEnumerator EnableTimedBonus()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1);
-            if (item.value < 60)
-            {
-                item.value += 1;
-            }
         }
     }
 }

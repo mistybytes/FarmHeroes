@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e19d8776b0abf5b4898ed337e3e52ead, type: 3}
-  m_Name: Seeds
+  m_Name: CarrotU
   m_EditorClassIdentifier: 
-  id: 2
-  itemName: Seeds
-  value: 15
-  icon: {fileID: 21300000, guid: 9bace1a4083a59143b550c89e2d516d0, type: 3}
+  id: 0
+  itemName: Carrot
+  value: 47
+  icon: {fileID: 21300000, guid: 120bf54dff785a0429b068b814e9c12a, type: 3}
+  rarity: 1
