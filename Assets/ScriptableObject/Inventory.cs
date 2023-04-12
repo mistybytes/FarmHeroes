@@ -7,5 +7,6 @@ public class Inventory : ScriptableObject
 {
     public List<Item> Items;
     public List<Animal> Animals;
-   
+    public Currency Currency;
+
 }

@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static InventoryMenager;
+using static Item;
 
 public class Farm : MonoBehaviour
 {
@@ -9,7 +8,7 @@ public class Farm : MonoBehaviour
     public List<Item> Items;
     public Dictionary<Rarity, double> Rarity = new Dictionary<Rarity, double>();
 
-    private void Start()
+    void Start()
     {
         BaseRarity();
     }
@@ -17,20 +16,20 @@ public class Farm : MonoBehaviour
 
     private void SetStartChance(double common, double uncomon, double rare, double epic, double legendary) 
     {
-        Rarity[InventoryMenager.Rarity.Common] = common;
-        Rarity[InventoryMenager.Rarity.Uncommon] = uncomon;
-        Rarity[InventoryMenager.Rarity.Rare] = rare;
-        Rarity[InventoryMenager.Rarity.Epic] = epic;
-        Rarity[InventoryMenager.Rarity.Legendary] = legendary;
+        Rarity[Item.Rarity.Common] = common;
+        Rarity[Item.Rarity.Uncommon] = uncomon;
+        Rarity[Item.Rarity.Rare] = rare;
+        Rarity[Item.Rarity.Epic] = epic;
+        Rarity[Item.Rarity.Legendary] = legendary;
     }
 
     private void SetDropChance(double common, double uncomon, double rare, double epic, double legendary)
     {
-        Rarity[InventoryMenager.Rarity.Common] += common;
-        Rarity[InventoryMenager.Rarity.Uncommon] += uncomon;
-        Rarity[InventoryMenager.Rarity.Rare] += rare;
-        Rarity[InventoryMenager.Rarity.Epic] += epic;
-        Rarity[InventoryMenager.Rarity.Legendary] += legendary;
+        Rarity[Item.Rarity.Common] += common;
+        Rarity[Item.Rarity.Uncommon] += uncomon;
+        Rarity[Item.Rarity.Rare] += rare;
+        Rarity[Item.Rarity.Epic] += epic;
+        Rarity[Item.Rarity.Legendary] += legendary;
     }
 
     private void BaseRarity()

@@ -19,3 +19,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 104cdd1e1d0cd884e8e0d999be6826b4, type: 2}
   - {fileID: 11400000, guid: 635a5c9b97ce43b479e494448a54c3a5, type: 2}
   Animals: []
+  Currency: {fileID: 11400000, guid: 1202477f0d6038745b68925fa4eba32e, type: 2}

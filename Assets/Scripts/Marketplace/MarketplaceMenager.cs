@@ -1,44 +1,63 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryMenager : MonoBehaviour
+public class MarketplaceMenager : MonoBehaviour
 {
-    public static InventoryMenager Instance;
+    public static MarketplaceMenager Instance;
+    public GameObject Viev,Sale, Buy, InventoryItem;
     public Inventory Inventory;
 
-
     public Transform ItemContent;
-    public GameObject InventoryItem;
-    private bool NewItem = false;
+
+    public List<Item> SaleList = new List<Item>();
 
 
-    private void Awake()
+    private bool wosInvoke = false; 
+
+    private void Start()
     {
         Instance = this;
-
-    }
-
-    public void newItem()
-    {
-        NewItem = true;
+        Button sell = Sale.GetComponent<Button>();
+        sell.onClick.AddListener(SellButton);
+        Button buy = Buy.GetComponent<Button>();
+        buy.onClick.AddListener(BuyButton);
     }
 
     private void Update()
     {
-        if (NewItem)
+        if (wosInvoke)
         {
             ListItems();
-            NewItem = false;
         }
     }
 
+    void SellButton()
+    {
+        Sale.SetActive(false);
+        Buy.SetActive(true);
+        ListItems();
+    }
 
-    public void ListItems () 
+    void BuyButton()
+    {
+        CleanContent();
+        Buy.SetActive(false);
+        Sale.SetActive(true);
+    }
+
+
+    void CleanContent()
     {
         foreach (Transform item in ItemContent)
         {
             Destroy(item.gameObject);
         }
+    }
+
+    public void ListItems()
+    {
+        CleanContent();
 
         foreach (Item item in Inventory.Items)
         {
@@ -56,6 +75,7 @@ public class InventoryMenager : MonoBehaviour
                 NewSlot(item, backpackItemCaunt);
             }
         }
+        wosInvoke = false;
     }
 
     public void NewSlot(Item item, int slotCaunt)
@@ -69,4 +89,12 @@ public class InventoryMenager : MonoBehaviour
         itemIcon.sprite = item.icon;
         itemCount.text = slotCaunt.ToString();
     }
+
+    public void Invoke()
+    {
+        wosInvoke = true;
+    }
+
 }
+
+

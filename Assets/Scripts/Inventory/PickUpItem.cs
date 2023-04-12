@@ -43,61 +43,52 @@ public class PickUpItem : MonoBehaviour
     private Item GetItem()
     {
         float value = Random.Range(0f, 100f);
-        InventoryMenager.Rarity rarity = InventoryMenager.Rarity.Uncommon;
+        Item.Rarity rarity = Item.Rarity.Uncommon;
 
         if (value > 0 && value < 1)
         {
-            rarity = InventoryMenager.Rarity.Common;
+            rarity = Item.Rarity.Common;
             return GetSpecificItem(rarity);
         }
         if (value > 0 && value < 1)
         {
-            rarity = InventoryMenager.Rarity.Rare;
+            rarity = Item.Rarity.Rare;
             return GetSpecificItem(rarity);
         }
         if (value > 0 && value < 1)
         {
-            rarity = InventoryMenager.Rarity.Epic;
+            rarity = Item.Rarity.Epic;
             return GetSpecificItem(rarity);
         }
         if (value > 0 && value < 1)
         {
-            rarity = InventoryMenager.Rarity.Legendary;
-            return GetSpecificItem(rarity);
-        }
-        if (value > 0 && value < 1)
-        {
-            rarity = InventoryMenager.Rarity.Divine;
+            rarity = Item.Rarity.Legendary;
             return GetSpecificItem(rarity);
         }
         return GetSpecificItem(rarity);
     }
 
-    private Item GetSpecificItem(InventoryMenager.Rarity rarity) 
+    private Item GetSpecificItem(Item.Rarity rarity) 
     {
         foreach (Item item in Farm.Items)
         {
-            if (item.rarity == InventoryMenager.Rarity.Uncommon)
+            if (item.rarity == Item.Rarity.Uncommon)
             {
                 return item;
             }
-            if (item.rarity == InventoryMenager.Rarity.Common)
+            if (item.rarity == Item.Rarity.Common)
             {
                 return item;
             }
-            if (item.rarity == InventoryMenager.Rarity.Rare)
+            if (item.rarity == Item.Rarity.Rare)
             {
                 return item;
             }
-            if (item.rarity == InventoryMenager.Rarity.Epic)
+            if (item.rarity == Item.Rarity.Epic)
             {
                 return item;
             }
-            if (item.rarity == InventoryMenager.Rarity.Legendary)
-            {
-                return item;
-            }
-            if (item.rarity == InventoryMenager.Rarity.Divine)
+            if (item.rarity == Item.Rarity.Legendary)
             {
                 return item;
             }

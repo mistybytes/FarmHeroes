@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class ValueRenderer : MonoBehaviour
@@ -24,6 +23,7 @@ public class ValueRenderer : MonoBehaviour
     void Replace(GameObject oldNumber, GameObject newNumber, bool unit)
     {
         GameObject number =  Instantiate(newNumber, oldNumber.transform.position, oldNumber.transform.rotation, Value.transform);
+        _unit = Item.GetValue();
         Destroy(oldNumber);
         if (unit)
         {

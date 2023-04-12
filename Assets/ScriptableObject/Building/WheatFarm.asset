@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 1
   Name: WheatFarm
-  Level: 40
+  Level: 2
+  Exp: 100

@@ -21,7 +21,7 @@ public class Animal : ScriptableObject
     public int energy => 100;
     public int star;
     public int level;
-    public InventoryMenager.Rarity rarity;
+    public Item.Rarity rarity;
     public AnimalType animalType;
     public Sprite icon;
     public GameObject model;

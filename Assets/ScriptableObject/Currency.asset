@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19d8776b0abf5b4898ed337e3e52ead, type: 3}
-  m_Name: WheatD
+  m_Script: {fileID: 11500000, guid: 302303e3e933f394294de56d0d7f6300, type: 3}
+  m_Name: Currency
   m_EditorClassIdentifier: 
-  id: 5
-  itemName: WhaetD
-  value: 0
-  icon: {fileID: 21300000, guid: 5ef64721b04c9bb4cbcfa06e9c160791, type: 3}
-  rarity: 5
+  Coin: 0
+  Diamond: 0

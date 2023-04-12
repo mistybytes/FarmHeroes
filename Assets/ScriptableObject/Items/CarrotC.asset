@@ -17,3 +17,4 @@ MonoBehaviour:
   value: 0
   icon: {fileID: 21300000, guid: 9bace1a4083a59143b550c89e2d516d0, type: 3}
   rarity: 0
+  price: 10

@@ -22,18 +22,16 @@ public class Chicken : MonoBehaviour
     {
         switch (animal.rarity)
         {
-            case InventoryMenager.Rarity.Common:
+            case Item.Rarity.Common:
                 return 1;
-            case InventoryMenager.Rarity.Uncommon:
+            case Item.Rarity.Uncommon:
                 return 2;
-            case InventoryMenager.Rarity.Rare:
+            case Item.Rarity.Rare:
                 return 3;
-            case InventoryMenager.Rarity.Epic:
+            case Item.Rarity.Epic:
                 return 4;
-            case InventoryMenager.Rarity.Legendary:
+            case Item.Rarity.Legendary:
                 return 5;
-            case InventoryMenager.Rarity.Divine:
-                return 6;
         }
         return 0;
     }
