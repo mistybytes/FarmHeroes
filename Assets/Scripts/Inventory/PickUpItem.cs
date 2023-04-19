@@ -22,7 +22,10 @@ public class PickUpItem : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            GetItem().value += Value;
+            for (int i = 0; i < Value; i++)
+            {
+                GetItem().value += 1;
+            }
             InventoryMenager.Instance.newItem();
             Value = 0;
         }
@@ -42,53 +45,38 @@ public class PickUpItem : MonoBehaviour
 
     private Item GetItem()
     {
-        float value = Random.Range(0f, 100f);
-        Item.Rarity rarity = Item.Rarity.Uncommon;
+        float value = (float)Random.Range(0, 1000) / 10;
+        float uncommonDrop = Farm.Rarity[Item.Rarity.Uncommon];
+        float commonDrop = uncommonDrop + Farm.Rarity[Item.Rarity.Common];
+        float rareDrop = commonDrop + Farm.Rarity[Item.Rarity.Rare];
+        float epicDrop = rareDrop + Farm.Rarity[Item.Rarity.Epic];
+        float legendaryDrop = epicDrop + Farm.Rarity[Item.Rarity.Legendary];
 
-        if (value > 0 && value < 1)
+        if (value > uncommonDrop && value < commonDrop)
         {
-            rarity = Item.Rarity.Common;
-            return GetSpecificItem(rarity);
+            return GetSpecificItem(Item.Rarity.Common);
         }
-        if (value > 0 && value < 1)
+        if (value >= commonDrop && value < rareDrop)
         {
-            rarity = Item.Rarity.Rare;
-            return GetSpecificItem(rarity);
+            return GetSpecificItem(Item.Rarity.Rare);
         }
-        if (value > 0 && value < 1)
+        if (value >= rareDrop && value < epicDrop)
         {
-            rarity = Item.Rarity.Epic;
-            return GetSpecificItem(rarity);
+            return GetSpecificItem(Item.Rarity.Epic);
         }
-        if (value > 0 && value < 1)
+        if (value >= epicDrop && value <= legendaryDrop)
         {
-            rarity = Item.Rarity.Legendary;
-            return GetSpecificItem(rarity);
+            return GetSpecificItem(Item.Rarity.Legendary);
         }
-        return GetSpecificItem(rarity);
+
+        return GetSpecificItem(Item.Rarity.Uncommon);
     }
 
     private Item GetSpecificItem(Item.Rarity rarity) 
     {
         foreach (Item item in Farm.Items)
         {
-            if (item.rarity == Item.Rarity.Uncommon)
-            {
-                return item;
-            }
-            if (item.rarity == Item.Rarity.Common)
-            {
-                return item;
-            }
-            if (item.rarity == Item.Rarity.Rare)
-            {
-                return item;
-            }
-            if (item.rarity == Item.Rarity.Epic)
-            {
-                return item;
-            }
-            if (item.rarity == Item.Rarity.Legendary)
+            if (item.rarity == rarity)
             {
                 return item;
             }

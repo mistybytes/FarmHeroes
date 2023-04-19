@@ -6,7 +6,7 @@ public class Farm : MonoBehaviour
 {
     public Building Building;
     public List<Item> Items;
-    public Dictionary<Rarity, double> Rarity = new Dictionary<Rarity, double>();
+    public Dictionary<Rarity, float> Rarity = new Dictionary<Rarity, float>();
 
     void Start()
     {
@@ -14,7 +14,7 @@ public class Farm : MonoBehaviour
     }
 
 
-    private void SetStartChance(double common, double uncomon, double rare, double epic, double legendary) 
+    private void SetStartChance(float common, float uncomon, float rare, float epic, float legendary) 
     {
         Rarity[Item.Rarity.Common] = common;
         Rarity[Item.Rarity.Uncommon] = uncomon;
@@ -23,7 +23,7 @@ public class Farm : MonoBehaviour
         Rarity[Item.Rarity.Legendary] = legendary;
     }
 
-    private void SetDropChance(double common, double uncomon, double rare, double epic, double legendary)
+    private void SetDropChance(float common, float uncomon, float rare, float epic, float legendary)
     {
         Rarity[Item.Rarity.Common] += common;
         Rarity[Item.Rarity.Uncommon] += uncomon;
@@ -40,35 +40,35 @@ public class Farm : MonoBehaviour
                 SetStartChance(100, 0, 0, 0, 0);
                 for (int i = 0; i < Building.Level; i++)
                 {
-                    SetDropChance(-2.5, 2.5, 0, 0, 0);
+                    SetDropChance(-2.5f, 2.5f, 0, 0, 0);
                 }
                 break;
             case 1:
                 SetStartChance(75, 25, 0, 0, 0);
                 for (int i = 0; i < Building.Level % 10; i++)
                 {
-                    SetDropChance(-2, 0.5, 1.5, 0, 0);
+                    SetDropChance(-2, 0.5f, 1.5f, 0, 0);
                 }
                 break;
             case 2:
                 SetStartChance(55, 30, 15, 0, 0);
                 for (int i = 0; i < Building.Level % 10; i++)
                 {
-                    SetDropChance(-1, 0.3, 0.5, 0.2, 0);
+                    SetDropChance(-1, 0.3f, 0.5f, 0.2f, 0);
                 }
                 break;
             case 3:
                 SetStartChance(45, 33, 20, 2, 0);
                 for (int i = 0; i < Building.Level % 10; i++)
                 {
-                    SetDropChance(-2, 0.7, 1, 0.3, 0);
+                    SetDropChance(-2, 0.7f, 1, 0.3f, 0);
                 }
                 break;
             case 4:
                 SetStartChance(25, 40, 30, 5, 0);
                 for (int i = 0; i < Building.Level % 10; i++)
                 {
-                    SetDropChance(-0.6, -1, 0.5, 1, 0.2);
+                    SetDropChance(-0.6f, -1, 0.5f, 1, 0.2f);
                 }
                 break;
             case 5:
@@ -76,7 +76,7 @@ public class Farm : MonoBehaviour
 
                 for (int i = 0; i < Building.Level % 10; i++)
                 {
-                    SetDropChance(0.3, -1, 0, 1, 0.3);
+                    SetDropChance(0.3f, -1, 0, 1, 0.3f);
                 }
                 break;
             case 6:
@@ -84,7 +84,7 @@ public class Farm : MonoBehaviour
 
                 for (int i = 0; i < Building.Level % 10; i++)
                 {
-                    SetDropChance(-0.7, -0.5, -0.5, 0.5, 1.2);
+                    SetDropChance(-0.7f, -0.5f, -0.5f, 0.5f, 1.2f);
                 }
                 break;
             case 7:
@@ -92,7 +92,7 @@ public class Farm : MonoBehaviour
 
                 for (int i = 0; i < Building.Level % 10; i++)
                 {
-                    SetDropChance(-0.4, -0.5, -1, 1, 0.9);
+                    SetDropChance(-0.4f, -0.5f, -1, 1, 0.9f);
                 }
                 break;
             case 8:
@@ -100,7 +100,7 @@ public class Farm : MonoBehaviour
 
                 for (int i = 0; i < Building.Level % 10; i++)
                 {
-                    SetDropChance(-0.4, -0.8, -0.8, 1, 1);
+                    SetDropChance(-0.4f, -0.8f, -0.8f, 1, 1);
                 }
                 break;
             case 9:
@@ -108,7 +108,7 @@ public class Farm : MonoBehaviour
 
                 for (int i = 0; i < Building.Level % 10; i++)
                 {
-                    SetDropChance(-0.1, -0.1, -0.5, 0.5, 0.2);
+                    SetDropChance(-0.1f, -0.1f, -0.5f, 0.5f, 0.2f);
                 }
                 break;
             case 10:

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Inventory
   m_EditorClassIdentifier: 
   Items:
+  - {fileID: 11400000, guid: ce735724c2d2bef4e9a171f3290e6a25, type: 2}
   - {fileID: 11400000, guid: 60abeaf30eb417448b100c08afbd200d, type: 2}
-  - {fileID: 11400000, guid: d179374ecf1bd2549a874f4746898b9e, type: 2}
-  - {fileID: 11400000, guid: 1b1a6c99a8cb08442bcc54ba2c0be5c9, type: 2}
-  - {fileID: 11400000, guid: 104cdd1e1d0cd884e8e0d999be6826b4, type: 2}
-  - {fileID: 11400000, guid: 635a5c9b97ce43b479e494448a54c3a5, type: 2}
+  - {fileID: 11400000, guid: aed8986cd1f95b343aa03cdbf04095e6, type: 2}
+  - {fileID: 11400000, guid: edf10df6da0319349841311be886473b, type: 2}
+  - {fileID: 11400000, guid: 98721f2b27bc78e4d888ffb6807b3d64, type: 2}
   Animals: []
   Currency: {fileID: 11400000, guid: 1202477f0d6038745b68925fa4eba32e, type: 2}

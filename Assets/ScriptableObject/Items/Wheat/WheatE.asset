@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: WheatE
   m_EditorClassIdentifier: 
   id: 3
-  itemName: WhaetE
-  value: 50
+  itemName: Whaet
+  value: 0
   icon: {fileID: 21300000, guid: 5ef64721b04c9bb4cbcfa06e9c160791, type: 3}
   rarity: 3
   price: 30
