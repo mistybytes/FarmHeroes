@@ -384,7 +384,6 @@ MonoBehaviour:
   InventoryItem: {fileID: 49686652697114677, guid: b1ef073a52a000444976a6176c46c354, type: 3}
   Inventory: {fileID: 11400000, guid: 1565b76a4bf155840a3b1fee9eb3bdbd, type: 2}
   ItemContent: {fileID: 2043925112}
-  SaleList: []
 --- !u!1 &243478474
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,6 +991,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1678335657}
     m_Modifications:
+    - target: {fileID: 322424359593567482, guid: 84cf6b712e62f5c4ca571f9b7896d701, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 708658509549303922, guid: 84cf6b712e62f5c4ca571f9b7896d701, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1800
+      objectReference: {fileID: 0}
+    - target: {fileID: 708658509549303922, guid: 84cf6b712e62f5c4ca571f9b7896d701, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 1532991869528903545, guid: 84cf6b712e62f5c4ca571f9b7896d701, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1075,6 +1086,22 @@ PrefabInstance:
     - target: {fileID: 1532991869528903545, guid: 84cf6b712e62f5c4ca571f9b7896d701, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5031739486209826241, guid: 84cf6b712e62f5c4ca571f9b7896d701, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5031739486209826241, guid: 84cf6b712e62f5c4ca571f9b7896d701, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -889.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153641668470463887, guid: 84cf6b712e62f5c4ca571f9b7896d701, type: 3}
+      propertyPath: m_CellSize.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153641668470463887, guid: 84cf6b712e62f5c4ca571f9b7896d701, type: 3}
+      propertyPath: m_CellSize.y
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 8451481933206846575, guid: 84cf6b712e62f5c4ca571f9b7896d701, type: 3}
       propertyPath: m_Name
@@ -2003,6 +2030,7 @@ MonoBehaviour:
   SaleButton: {fileID: 0}
   currency: {fileID: 0}
   coin: {fileID: 0}
+  inventory: {fileID: 0}
 --- !u!1 &1560433470
 GameObject:
   m_ObjectHideFlags: 0
@@ -2061,6 +2089,7 @@ MonoBehaviour:
   SaleButton: {fileID: 523092406}
   currency: {fileID: 11400000, guid: 1202477f0d6038745b68925fa4eba32e, type: 2}
   coin: {fileID: 76937981}
+  inventory: {fileID: 11400000, guid: 1565b76a4bf155840a3b1fee9eb3bdbd, type: 2}
 --- !u!224 &1579398183 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9197959135035866952, guid: 0c41fd5c7fa0db44a9e6c3ab58243a4e, type: 3}

@@ -1,26 +1,12 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
-[CreateAssetMenu(fileName = "New Item", menuName = "Item/Create New Item")]
+[CreateAssetMenu(fileName = "New Item", menuName = "Item/Create New Specific Item")]
 public class Item : ScriptableObject
 {
-
-    public int id;
-    public string itemName;
-    public int value;
-    public Sprite icon;
-    public Rarity rarity;
-    public int price;
-
-    public enum Rarity
-    {
-        Common,
-        Uncommon,
-        Rare,
-        Epic,
-        Legendary,
-    }
-
+    public int Id;
+    public ItemSO Data;
+    public Dictionary<Rarity, int> Quantity = new Dictionary<Rarity, int>();
 }
+
+

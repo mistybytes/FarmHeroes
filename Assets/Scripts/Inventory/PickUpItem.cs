@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PickUpItem : MonoBehaviour
@@ -24,7 +26,7 @@ public class PickUpItem : MonoBehaviour
         {
             for (int i = 0; i < Value; i++)
             {
-                GetItem().value += 1;
+                UpdateItemValue();
             }
             InventoryMenager.Instance.newItem();
             Value = 0;
@@ -43,44 +45,62 @@ public class PickUpItem : MonoBehaviour
         }
     }
 
-    private Item GetItem()
+    private void UpdateItemValue()
     {
-        float value = (float)Random.Range(0, 1000) / 10;
-        float uncommonDrop = Farm.Rarity[Item.Rarity.Uncommon];
-        float commonDrop = uncommonDrop + Farm.Rarity[Item.Rarity.Common];
-        float rareDrop = commonDrop + Farm.Rarity[Item.Rarity.Rare];
-        float epicDrop = rareDrop + Farm.Rarity[Item.Rarity.Epic];
-        float legendaryDrop = epicDrop + Farm.Rarity[Item.Rarity.Legendary];
+        float value = (float)UnityEngine.Random.Range(0, 1000) / 10;
+        float commonDrop = Farm.DropChance[Rarity.Common];
+        float uncommonDrop = commonDrop + Farm.DropChance[Rarity.Uncommon];
+        float rareDrop = commonDrop + Farm.DropChance[Rarity.Rare];
+        float epicDrop = rareDrop + Farm.DropChance[Rarity.Epic];
+        float legendaryDrop = epicDrop + Farm.DropChance[Rarity.Legendary];
 
-        if (value > uncommonDrop && value < commonDrop)
+        if (value < commonDrop )
         {
-            return GetSpecificItem(Item.Rarity.Common);
+            addOrUpdate(Farm.Item.Quantity, Rarity.Common, 1);
         }
-        if (value >= commonDrop && value < rareDrop)
+        if (value >= commonDrop && value < uncommonDrop)
         {
-            return GetSpecificItem(Item.Rarity.Rare);
+            addOrUpdate(Farm.Item.Quantity, Rarity.Uncommon, 1);
+        }
+        if (value >= uncommonDrop && value < rareDrop)
+        {
+            addOrUpdate(Farm.Item.Quantity, Rarity.Rare, 1);
         }
         if (value >= rareDrop && value < epicDrop)
         {
-            return GetSpecificItem(Item.Rarity.Epic);
+            addOrUpdate(Farm.Item.Quantity, Rarity.Epic, 1);
         }
         if (value >= epicDrop && value <= legendaryDrop)
         {
-            return GetSpecificItem(Item.Rarity.Legendary);
+            addOrUpdate(Farm.Item.Quantity, Rarity.Legendary, 1);
         }
-
-        return GetSpecificItem(Item.Rarity.Uncommon);
+        UpdateItem();
     }
 
-    private Item GetSpecificItem(Item.Rarity rarity) 
+    void addOrUpdate(Dictionary<Rarity, int> dic, Rarity key, int newValue)
     {
-        foreach (Item item in Farm.Items)
+        int val;
+        if (dic.TryGetValue(key, out val))
         {
-            if (item.rarity == rarity)
+            dic[key] = val + newValue;
+        }
+        else
+        {
+            dic.Add(key, newValue);
+        }
+    }
+
+    void UpdateItem()
+    {
+        if (Farm.Item.Quantity.Count < 5)
+        {
+            foreach (Rarity rarity in (Rarity[])Enum.GetValues(typeof(Rarity)))
             {
-                return item;
+                if (!Farm.Item.Quantity.ContainsKey(rarity))
+                {
+                    Farm.Item.Quantity.Add(rarity, 0);
+                }
             }
         }
-        return null;
     }
 }

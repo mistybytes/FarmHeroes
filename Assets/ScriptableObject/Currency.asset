@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 302303e3e933f394294de56d0d7f6300, type: 3}
   m_Name: Currency
   m_EditorClassIdentifier: 
-  Coin: 0
-  Diamond: 0
+  Coin: 100
+  Diamond: 500

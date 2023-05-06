@@ -5,5 +5,4 @@ public class Currency : ScriptableObject
 {
     public int Coin;
     public int Diamond;
-
 }

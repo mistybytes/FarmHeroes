@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f88c1144b1b5ff449526dae1a934f66, type: 3}
+  m_Name: ChickenFarm
+  m_EditorClassIdentifier: 
+  Items:
+  - {fileID: 11400000, guid: ce735724c2d2bef4e9a171f3290e6a25, type: 2}
+  - {fileID: 11400000, guid: edf10df6da0319349841311be886473b, type: 2}
+  - {fileID: 11400000, guid: 98721f2b27bc78e4d888ffb6807b3d64, type: 2}
+  - {fileID: 11400000, guid: aed8986cd1f95b343aa03cdbf04095e6, type: 2}
+  - {fileID: 11400000, guid: 60abeaf30eb417448b100c08afbd200d, type: 2}
+  Animals:
+  - {fileID: 11400000, guid: a4bbe3ea8cc7b534b88d276e635b7c33, type: 2}
+  - {fileID: 11400000, guid: 89a52371b2444b149bd17b20856e771c, type: 2}
+  - {fileID: 11400000, guid: 8b9b976becf2e7640a03697043daf2fc, type: 2}
+  - {fileID: 11400000, guid: fbde59105528ad240a68639f79993862, type: 2}
+  - {fileID: 11400000, guid: fd869424e94618e4195dee2b235dd28d, type: 2}

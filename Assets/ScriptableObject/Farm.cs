@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static Item;
 
 public class Farm : MonoBehaviour
 {
     public Building Building;
-    public List<Item> Items;
-    public Dictionary<Rarity, float> Rarity = new Dictionary<Rarity, float>();
+    public Item Item;
+    public Dictionary<Rarity, float> DropChance = new Dictionary<Rarity, float>();
 
     void Start()
     {
@@ -16,20 +15,20 @@ public class Farm : MonoBehaviour
 
     private void SetStartChance(float common, float uncomon, float rare, float epic, float legendary) 
     {
-        Rarity[Item.Rarity.Common] = common;
-        Rarity[Item.Rarity.Uncommon] = uncomon;
-        Rarity[Item.Rarity.Rare] = rare;
-        Rarity[Item.Rarity.Epic] = epic;
-        Rarity[Item.Rarity.Legendary] = legendary;
+        DropChance[Rarity.Common] = common;
+        DropChance[Rarity.Uncommon] = uncomon;
+        DropChance[Rarity.Rare] = rare;
+        DropChance[Rarity.Epic] = epic;
+        DropChance[Rarity.Legendary] = legendary;
     }
 
     private void SetDropChance(float common, float uncomon, float rare, float epic, float legendary)
     {
-        Rarity[Item.Rarity.Common] += common;
-        Rarity[Item.Rarity.Uncommon] += uncomon;
-        Rarity[Item.Rarity.Rare] += rare;
-        Rarity[Item.Rarity.Epic] += epic;
-        Rarity[Item.Rarity.Legendary] += legendary;
+        DropChance[Rarity.Common] += common;
+        DropChance[Rarity.Uncommon] += uncomon;
+        DropChance[Rarity.Rare] += rare;
+        DropChance[Rarity.Epic] += epic;
+        DropChance[Rarity.Legendary] += legendary;
     }
 
     private void BaseRarity()

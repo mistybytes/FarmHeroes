@@ -5,13 +5,10 @@ using UnityEngine.UI;
 public class Sale : MonoBehaviour
 {
     public GameObject[] slots = new GameObject[3];
-
     public GameObject SaleButton;
-
     public Currency currency;
-
     public Coin coin;
-
+    public Inventory inventory;
 
     private void Start()
     {
@@ -25,15 +22,18 @@ public class Sale : MonoBehaviour
         {                                            
             if (slot.transform.childCount > 0)
             {
-                var child = slot.transform.GetChild(0);
+                Transform child = slot.transform.GetChild(0);
                 Text itemName = child.transform.Find("ItemName").GetComponent<Text>();
-                Text itemCount = child.transform.Find("ItemCount").GetComponent<Text>();          
-                foreach (Item item in MarketplaceMenager.Instance.Inventory.Items)
+                Text itemCount = child.transform.Find("ItemCount").GetComponent<Text>();  
+                Image imageChildren = child.GetComponent<Image>();
+                foreach (Item item in inventory.Items)
                 {
-                    if (item.itemName == itemName.text)
+                    if (item.Data.Name == itemName.text )
                     {
-                        item.value -= itemCount.text.ParseLargeInteger();
-                        currency.Coin += item.price * itemCount.text.ParseLargeInteger();
+                        Rarity rararity = colorRarity(imageChildren);
+                        item.Quantity[rararity] -= itemCount.text.ParseLargeInteger();
+                        int price = item.Data.BasicPrice * ((int)rararity + 1);
+                        currency.Coin += price * itemCount.text.ParseLargeInteger();
                         Destroy(child.transform.gameObject);
                         break;
                     }
@@ -43,4 +43,23 @@ public class Sale : MonoBehaviour
 
         }
     }
+
+    private Rarity colorRarity(Image image)
+    {
+        if (image.color == Color.white)
+        {
+            return Rarity.Uncommon;
+        }else if (image.color == Color.green)
+        {
+            return Rarity.Rare;
+        }else if(image.color == Color.blue)
+        {
+            return Rarity.Epic;
+        }else if (image.color == Color.yellow)
+        {
+            return Rarity.Legendary;
+        }
+        return Rarity.Common;
+    }
+
 }
