@@ -1,8 +1,11 @@
+using Palmmedia.ReportGenerator.Core.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class DataController : MonoBehaviour
 {
@@ -15,9 +18,7 @@ public class DataController : MonoBehaviour
 
     void Start()
     {
-
-        InventoryDTO = new InventoryDTO(Inventory);
-        LoadInventoryData();
+        InicialInventoryObject();
 
     }
 
@@ -26,7 +27,16 @@ public class DataController : MonoBehaviour
         stableItems.Add(itemDTO);
     }
 
-
+    void InicialInventoryObject()
+    {
+        foreach(Item item in Inventory.Items)
+        {
+            foreach (Rarity rarity in (Rarity[])Enum.GetValues(typeof(Rarity)))
+            {
+                item.Quantity.Add(rarity, 0);
+            }
+        }
+    }
     public List<ItemDTO> GetStableItems()
     {
         return stableItems;
@@ -43,7 +53,7 @@ public class DataController : MonoBehaviour
         WriteToFile(stableFile, json);
     }
 
-    void SaveInventoryData()
+    public void SaveInventoryData()
     {
         string json = InventoryToJson();
         WriteToFile(inventoryFile, json);
@@ -64,12 +74,44 @@ public class DataController : MonoBehaviour
     }
     private string InventoryToJson()
     {
+        InventoryDTO = new InventoryDTO(Inventory);
         return JsonUtility.ToJson(InventoryDTO);
     }
     private void LoadInventoryDTOToInventory()
     {
         Inventory.Currency.Coin = InventoryDTO.Currency.Coin;
         Inventory.Currency.Diamond = InventoryDTO.Currency.Diamond;
+
+        foreach(ItemDTO itemDTO in InventoryDTO.Items) 
+        {
+            foreach(string quantity in itemDTO.Quantity)
+            {
+                string[] strings = quantity.Split(':');
+                Rarity rarity =  stringToRarity(strings[0]);
+                int value = strings[1].ParseLargeInteger();
+                Inventory.Items.FirstOrDefault(item => item.Data.Name == itemDTO.Name).Quantity[rarity] = value;
+            }
+        }
+
+        Rarity stringToRarity(string sRarity) 
+        {
+            
+            switch(sRarity) 
+            {
+                case "Common":
+                    return Rarity.Common;
+                case "Uncommon":
+                    return Rarity.Uncommon;
+                case "Rare":
+                    return Rarity.Rare;
+                case "Epic":
+                    return Rarity.Epic;
+                case "Legendary":
+                    return Rarity.Legendary;
+            }
+            return Rarity.Common;
+        }
+
 
         foreach (Item item in Inventory.Items)
         {

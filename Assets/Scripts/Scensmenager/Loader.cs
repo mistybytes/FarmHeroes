@@ -15,7 +15,6 @@ public static class Loader
         Possesion,
         Farm,
         Field
-
     }
 
     private static Action onLoaderCallback;

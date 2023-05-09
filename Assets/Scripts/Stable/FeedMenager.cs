@@ -33,11 +33,11 @@ public class FeedMenager : MonoBehaviour
         {
             if (itemDTO.Name == plantName)
             {
-                commonValue.text = $"{itemDTO.Items[Rarity.Common]} %";
-                uncommonValue.text = $"{itemDTO.Items[Rarity.Uncommon]} %";
-                rareValue.text = $"{itemDTO.Items[Rarity.Rare]} %";
-                epicValue.text = $"{itemDTO.Items[Rarity.Epic]} %";
-                legenderyValue.text = $"{itemDTO.Items[Rarity.Legendary]} %";
+       //         commonValue.text = $"{itemDTO.Items[Rarity.Common]} %";
+         //       uncommonValue.text = $"{itemDTO.Items[Rarity.Uncommon]} %";
+       //         rareValue.text = $"{itemDTO.Items[Rarity.Rare]} %";
+       //         epicValue.text = $"{itemDTO.Items[Rarity.Epic]} %";
+       //         legenderyValue.text = $"{itemDTO.Items[Rarity.Legendary]} %";
             }
         }
     }
