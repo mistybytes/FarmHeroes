@@ -22,6 +22,7 @@ public class StableMenager : MonoBehaviour
         if (wosInvoke)
         {
             Content.ListItem();
+            wosInvoke = false;
         }
     }
 

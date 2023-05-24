@@ -3,28 +3,63 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml.Linq;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class DataController : MonoBehaviour
 {
     public Inventory Inventory;
-    private InventoryDTO InventoryDTO;
-    private List<ItemDTO> stableItems;
+    private InventoryDTO InventoryDTO = new InventoryDTO();
+    private StableItems stableItems = new StableItems();
     private string inventoryFile => "Inventory.txt";
     private string stableFile => "Stable.txt";
 
 
     void Start()
     {
+        if (!File.Exists(GetFilePath(stableFile)))
+        {
+            InicialStableFile();
+        }
         InicialInventoryObject();
-
+        LoadInventoryData();
     }
 
     public void AddItemToStable(ItemDTO itemDTO)
     {
-        stableItems.Add(itemDTO);
+        stableItems.Items.Add(itemDTO);
+    }
+
+    public StableItems GetStableItems() 
+    {
+        return stableItems;
+    }
+
+    public void AddItemToStable(string itemName, Rarity rarity, int value)
+    {
+        ItemDTO item = stableItems.Items.FirstOrDefault(item => item.Name.Equals(itemName));
+        Dictionary<Rarity, int> quantity = new Dictionary<Rarity, int>();
+        foreach (var pair in item.Quantity)
+        {
+            string[] row = pair.Split(":");
+            string rarityString = row[0];
+            int valueD = int.Parse(row[1]);
+            Rarity rarityD = stringToRarity(rarityString);
+            quantity.Add(rarityD, valueD);
+        }
+        quantity[rarity] += value;
+
+        List<string> newQuantity = new List<string>();
+
+        foreach (Rarity rarityD in (Rarity[])Enum.GetValues(typeof(Rarity)))
+        {
+            string record = $"{rarityD}:{quantity[rarityD]}";
+            newQuantity.Add(record);
+        }
+        item.Quantity = newQuantity;
+        SaveStableData();
+        Item invItem = Inventory.Items.FirstOrDefault(invItem => invItem.Data.Name.Equals(item.Name));
+        invItem.Quantity[rarity] -= value;
+
     }
 
     void InicialInventoryObject()
@@ -33,14 +68,33 @@ public class DataController : MonoBehaviour
         {
             foreach (Rarity rarity in (Rarity[])Enum.GetValues(typeof(Rarity)))
             {
-                item.Quantity.Add(rarity, 0);
+                if (!item.Quantity.ContainsKey(rarity))
+                {
+                    item.Quantity.Add(rarity, 0);
+                }
             }
         }
     }
-    public List<ItemDTO> GetStableItems()
+    void InicialStableFile()
     {
-        return stableItems;
+        foreach (Item item in Inventory.Items)
+        {
+            List<string> quantity = new List<string>();
+            foreach (Rarity rarity in (Rarity[])Enum.GetValues(typeof(Rarity)))
+            {
+                string record = $"{rarity}:0";
+                quantity.Add(record);
+            }
+            ItemDTO itemDTO = new ItemDTO()
+            {
+                Name = item.Data.Name,
+                Quantity = quantity
+            };
+            stableItems.Items.Add(itemDTO);
+        }
+        SaveStableData();
     }
+    
 
     private void OnDisable()
     {
@@ -59,13 +113,16 @@ public class DataController : MonoBehaviour
         WriteToFile(inventoryFile, json);
     }
 
-    public void LoadStableItems()
+
+
+    public StableItems LoadStableItems()
     {
         string json = ReadFromFIle(stableFile);
         JsonUtility.FromJsonOverwrite(json, stableItems);
+        return stableItems;
     }
 
-    void LoadInventoryData()
+    public void LoadInventoryData()
     {
         string json = ReadFromFIle(inventoryFile);
         JsonUtility.FromJsonOverwrite(json, InventoryDTO);
@@ -93,37 +150,6 @@ public class DataController : MonoBehaviour
             }
         }
 
-        Rarity stringToRarity(string sRarity) 
-        {
-            
-            switch(sRarity) 
-            {
-                case "Common":
-                    return Rarity.Common;
-                case "Uncommon":
-                    return Rarity.Uncommon;
-                case "Rare":
-                    return Rarity.Rare;
-                case "Epic":
-                    return Rarity.Epic;
-                case "Legendary":
-                    return Rarity.Legendary;
-            }
-            return Rarity.Common;
-        }
-
-
-        foreach (Item item in Inventory.Items)
-        {
-            ItemDTO itemDTO = InventoryDTO.Items.FirstOrDefault(itemDTO => item.name.Equals(itemDTO.Name));
-            if (itemDTO != null)
-            {
-                foreach (Rarity rarity in (Rarity[])Enum.GetValues(typeof(Rarity)))
-                {
-                    item.Quantity[rarity] = itemDTO.Items[rarity];
-                }
-            }
-        }
         foreach (Animal animal in Inventory.Animals)
         {
             AnimalDTO animalDTO = InventoryDTO.Animals.FirstOrDefault(animalDTO => animal.id.Equals(animalDTO.Id));
@@ -132,6 +158,25 @@ public class DataController : MonoBehaviour
                 animal.Data.Level = animalDTO.Level;
             }
         }
+    }
+
+    public Rarity stringToRarity(string sRarity)
+    {
+
+        switch (sRarity)
+        {
+            case "Common":
+                return Rarity.Common;
+            case "Uncommon":
+                return Rarity.Uncommon;
+            case "Rare":
+                return Rarity.Rare;
+            case "Epic":
+                return Rarity.Epic;
+            case "Legendary":
+                return Rarity.Legendary;
+        }
+        return Rarity.Common;
     }
 
     private string ReadFromFIle(string fileName)

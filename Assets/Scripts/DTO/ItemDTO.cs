@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 [Serializable]
 public class ItemDTO
@@ -7,6 +8,7 @@ public class ItemDTO
     public string Name;
     public List<string> Quantity = new List<string>();
 
+    public ItemDTO() { }
     public ItemDTO(Item item) 
     {
         Name = item.Data.Name;

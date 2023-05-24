@@ -6,7 +6,9 @@ public class InventoryDTO
 {
     public List<ItemDTO> Items = new List<ItemDTO>();
     public List<AnimalDTO> Animals = new List<AnimalDTO>();
-    public CurrencyDTO Currency;
+    public CurrencyDTO Currency = new CurrencyDTO();
+
+    public InventoryDTO() { }
     public InventoryDTO(Inventory inventory) 
     {
         foreach(Item item in inventory.Items)

@@ -12,12 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f88c1144b1b5ff449526dae1a934f66, type: 3}
   m_Name: ChickenFarm
   m_EditorClassIdentifier: 
-  Items:
-  - {fileID: 11400000, guid: ce735724c2d2bef4e9a171f3290e6a25, type: 2}
-  - {fileID: 11400000, guid: edf10df6da0319349841311be886473b, type: 2}
-  - {fileID: 11400000, guid: 98721f2b27bc78e4d888ffb6807b3d64, type: 2}
-  - {fileID: 11400000, guid: aed8986cd1f95b343aa03cdbf04095e6, type: 2}
-  - {fileID: 11400000, guid: 60abeaf30eb417448b100c08afbd200d, type: 2}
+  Item: {fileID: 11400000, guid: fb505dc5edd3eb741a7540852a608841, type: 2}
   Animals:
   - {fileID: 11400000, guid: a4bbe3ea8cc7b534b88d276e635b7c33, type: 2}
   - {fileID: 11400000, guid: 89a52371b2444b149bd17b20856e771c, type: 2}
