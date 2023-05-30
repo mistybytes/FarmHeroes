@@ -1,9 +1,10 @@
 using Palmmedia.ReportGenerator.Core.Common;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class FeedMenager : MonoBehaviour
 {
@@ -12,16 +13,20 @@ public class FeedMenager : MonoBehaviour
     public GameObject[] Slots;
     public GameObject ChansValus;
     public FarmSO Farm;
-    public StableItemCollector StableItemCollector;
     public DataController DataController;
-    public Button FeedButton;
+    public Inventory Inventory;
+    public Text Quantity;
+    private int FeedQuantity;
+
+
+    public int MaxQuantityOfPlant = 60;
+    private Dictionary<Rarity,int> stableRarity = new Dictionary<Rarity,int>();
     private void Start()
     {
         Instance = this;
         DataController.LoadInventoryData();
         DataController.LoadStableItems();
         StartValues();
-        FeedButton.GetComponent<Button>().onClick.AddListener(Feed);
 
     }
     private void OnDisable()
@@ -29,31 +34,98 @@ public class FeedMenager : MonoBehaviour
         DataController.SaveStableData();
     }
 
+    void AddNewAnimal()
+    {
+        for (int i = 0; i < MaxQuantityOfPlant; i++)
+        {
+            float value = UnityEngine.Random.Range(0, MaxQuantityOfPlant);
+            float commonDrop = stableRarity[Rarity.Common];
+            float uncommonDrop = commonDrop + stableRarity[Rarity.Uncommon];
+            float rareDrop = commonDrop + stableRarity[Rarity.Rare];
+            float epicDrop = rareDrop + stableRarity[Rarity.Epic];
+            float legendaryDrop = epicDrop + stableRarity[Rarity.Legendary];
+
+            if (value < commonDrop)
+            {
+                AddAnimal(Rarity.Common);
+            }
+            if (value >= commonDrop && value < uncommonDrop)
+            {
+                AddAnimal(Rarity.Uncommon);
+            }
+            if (value >= uncommonDrop && value < rareDrop)
+            {
+                AddAnimal(Rarity.Rare);
+            }
+            if (value >= rareDrop && value < epicDrop)
+            {
+                AddAnimal(Rarity.Epic);
+            }
+            if (value >= epicDrop && value <= legendaryDrop)
+            {
+                AddAnimal(Rarity.Legendary);
+            }
+        }
+    }
+
+    void AddAnimal(Rarity rarity)
+    {
+        int id = Guid.NewGuid().ToString().ParseLargeInteger();
+        Animal animalData = Farm.Animals.FirstOrDefault(animalS => animalS.rarity == rarity);
+        AnimalClass animal = new AnimalClass(animalData);
+        animal.Id = id;
+        Inventory.Animals.Add(animal);
+
+    }
+
     void StartValues()
     {
         string plantName = Farm.Item.Data.Name;
+
         DataController.LoadStableItems();
+
         Text commonValue = ChansValus.transform.Find("Common").GetChild(0).GetComponent<Text>();
         Text uncommonValue = ChansValus.transform.Find("Uncommon").GetChild(0).GetComponent<Text>();
         Text rareValue = ChansValus.transform.Find("Rare").GetChild(0).GetComponent<Text>();
         Text epicValue = ChansValus.transform.Find("Epic").GetChild(0).GetComponent<Text>();
         Text legenderyValue = ChansValus.transform.Find("Legendary").GetChild(0).GetComponent<Text>();
+        
+
         ItemDTO itemDTO = DataController.GetStableItems().Items.FirstOrDefault(item => item.Name.Equals(plantName));
-        Dictionary<Rarity, int> quantity = new Dictionary<Rarity, int>();
+
         foreach (var pair in itemDTO.Quantity)
         {
             string[] row = pair.Split(":");
             string rarityString = row[0];
             int value = int.Parse(row[1]);
             Rarity rarity = stringToRarity(rarityString);
-            quantity.Add(rarity, value);
+            if (stableRarity.ContainsKey(rarity))
+            {
+                stableRarity[rarity] = value;
+            }
+            else
+            {
+                stableRarity.Add(rarity, value);
+            }
         }
-        commonValue.text = $"{quantity[Rarity.Common]} %";
-        uncommonValue.text = $"{quantity[Rarity.Uncommon]} %";
-        rareValue.text = $"{quantity[Rarity.Rare]} %";
-        epicValue.text = $"{quantity[Rarity.Epic]} %";
-        legenderyValue.text = $"{quantity[Rarity.Legendary]} %";
 
+        commonValue.text = $"{stableRarity[Rarity.Common]} %";
+        uncommonValue.text = $"{stableRarity[Rarity.Uncommon]} %";
+        rareValue.text = $"{stableRarity[Rarity.Rare]} %";
+        epicValue.text = $"{stableRarity[Rarity.Epic]} %";
+        legenderyValue.text = $"{stableRarity[Rarity.Legendary]} %";
+        QuantityFeed();
+    }
+
+
+    private void QuantityFeed()
+    {
+        Text quantity = Quantity.GetComponent<Text>();
+        foreach (Rarity rarity in (Rarity[])Enum.GetValues(typeof(Rarity)))
+        {
+           FeedQuantity += stableRarity[rarity];
+        }
+        quantity.text = $"{FeedQuantity}/{MaxQuantityOfPlant}";
     }
 
     public Rarity stringToRarity(string sRarity)
@@ -90,9 +162,15 @@ public class FeedMenager : MonoBehaviour
                 StartValues();
                 for (var i = slot.transform.childCount - 1; i >= 0; i--)
                 {
-                    Object.Destroy(slot.transform.GetChild(i).gameObject);
+                    UnityEngine.Object.Destroy(slot.transform.GetChild(i).gameObject);
                 }
             }
+        }
+        if (FeedQuantity >= MaxQuantityOfPlant)
+        {
+            AddNewAnimal();
+            FeedQuantity -= MaxQuantityOfPlant;
+            QuantityFeed();
         }
     }
 

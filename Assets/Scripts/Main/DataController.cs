@@ -31,6 +31,13 @@ public class DataController : MonoBehaviour
 
     public StableItems GetStableItems() 
     {
+        if (stableItems == null)
+        {
+            foreach (ItemDTO item in InventoryDTO.Items)
+            {
+                stableItems.Items.Add(item);
+            }
+        }
         return stableItems;
     }
 
@@ -150,12 +157,12 @@ public class DataController : MonoBehaviour
             }
         }
 
-        foreach (Animal animal in Inventory.Animals)
+        foreach (AnimalClass animal in Inventory.Animals)
         {
-            AnimalDTO animalDTO = InventoryDTO.Animals.FirstOrDefault(animalDTO => animal.id.Equals(animalDTO.Id));
+            AnimalDTO animalDTO = InventoryDTO.Animals.FirstOrDefault(animalDTO => animal.Id.Equals(animalDTO.Id));
             if (animalDTO != null)
             {
-                animal.Data.Level = animalDTO.Level;
+                animal.Level = animalDTO.Level;
             }
         }
     }

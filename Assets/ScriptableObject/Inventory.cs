@@ -8,7 +8,7 @@ public class Inventory : ScriptableObject
 {
     
     public List<Item> Items;
-    public List<Animal> Animals;
+    public List<AnimalClass> Animals;
     public Currency Currency;
 
     public Inventory (InventoryDTO inventoryDTO)

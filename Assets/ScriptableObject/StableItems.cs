@@ -5,4 +5,5 @@ using System.Collections.Generic;
 public class StableItems
 {
     public List<ItemDTO> Items = new List<ItemDTO>();
+
 }
