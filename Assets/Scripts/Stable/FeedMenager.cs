@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class FeedMenager : MonoBehaviour
 {
@@ -17,10 +16,12 @@ public class FeedMenager : MonoBehaviour
     public Inventory Inventory;
     public Text Quantity;
     private int FeedQuantity;
+    public ListAnimals Content;
 
 
     public int MaxQuantityOfPlant = 60;
     private Dictionary<Rarity,int> stableRarity = new Dictionary<Rarity,int>();
+
     private void Start()
     {
         Instance = this;
@@ -28,6 +29,11 @@ public class FeedMenager : MonoBehaviour
         DataController.LoadStableItems();
         StartValues();
 
+    }
+
+    public void SaveStableData()
+    {
+        DataController.SaveStableData();
     }
     private void OnDisable()
     {
@@ -68,14 +74,23 @@ public class FeedMenager : MonoBehaviour
         }
     }
 
+
     void AddAnimal(Rarity rarity)
     {
-        int id = Guid.NewGuid().ToString().ParseLargeInteger();
-        Animal animalData = Farm.Animals.FirstOrDefault(animalS => animalS.rarity == rarity);
-        AnimalClass animal = new AnimalClass(animalData);
-        animal.Id = id;
-        Inventory.Animals.Add(animal);
-
+        foreach(AnimalSO animalS in Inventory.AnimalsSo)
+        {
+            if (animalS.Name == Farm.Animal.Name)
+            {
+                GameObject newObject = new GameObject(animalS.Name);
+                Animal animal = newObject.AddComponent<Animal>();
+                animal.id = Guid.NewGuid().ToString().ParseLargeInteger();
+                animal.Energy = 0;
+                animal.Level = 1;
+                animal.Data = animalS;
+                animal.rarity = rarity;
+                Inventory.Animals.Add(animal);
+            }
+        }  
     }
 
     void StartValues()
@@ -92,29 +107,40 @@ public class FeedMenager : MonoBehaviour
         
 
         ItemDTO itemDTO = DataController.GetStableItems().Items.FirstOrDefault(item => item.Name.Equals(plantName));
-
-        foreach (var pair in itemDTO.Quantity)
+        if (itemDTO == null)
         {
-            string[] row = pair.Split(":");
-            string rarityString = row[0];
-            int value = int.Parse(row[1]);
-            Rarity rarity = stringToRarity(rarityString);
-            if (stableRarity.ContainsKey(rarity))
-            {
-                stableRarity[rarity] = value;
-            }
-            else
-            {
-                stableRarity.Add(rarity, value);
-            }
+            commonValue.text = "0 %";
+            uncommonValue.text = "0 %";
+            rareValue.text = "0 %";
+            epicValue.text = "0 %";
+            legenderyValue.text = "0 %";
+            QuantityFeed();
         }
+        else
+        {
+            foreach (var pair in itemDTO.Quantity)
+            {
+                string[] row = pair.Split(":");
+                string rarityString = row[0];
+                int value = int.Parse(row[1]);
+                Rarity rarity = stringToRarity(rarityString);
+                if (stableRarity.ContainsKey(rarity))
+                {
+                    stableRarity[rarity] = value;
+                }
+                else
+                {
+                    stableRarity.Add(rarity, value);
+                }
+            }
 
-        commonValue.text = $"{stableRarity[Rarity.Common]} %";
-        uncommonValue.text = $"{stableRarity[Rarity.Uncommon]} %";
-        rareValue.text = $"{stableRarity[Rarity.Rare]} %";
-        epicValue.text = $"{stableRarity[Rarity.Epic]} %";
-        legenderyValue.text = $"{stableRarity[Rarity.Legendary]} %";
-        QuantityFeed();
+            commonValue.text = $"{stableRarity[Rarity.Common]} %";
+            uncommonValue.text = $"{stableRarity[Rarity.Uncommon]} %";
+            rareValue.text = $"{stableRarity[Rarity.Rare]} %";
+            epicValue.text = $"{stableRarity[Rarity.Epic]} %";
+            legenderyValue.text = $"{stableRarity[Rarity.Legendary]} %";
+            QuantityFeed();
+        }
     }
 
 
@@ -123,7 +149,14 @@ public class FeedMenager : MonoBehaviour
         Text quantity = Quantity.GetComponent<Text>();
         foreach (Rarity rarity in (Rarity[])Enum.GetValues(typeof(Rarity)))
         {
-           FeedQuantity += stableRarity[rarity];
+            if (stableRarity.ContainsKey(rarity))
+            {
+                FeedQuantity += stableRarity[rarity];
+            }
+            else
+            {
+                FeedQuantity = +0;
+            }
         }
         quantity.text = $"{FeedQuantity}/{MaxQuantityOfPlant}";
     }

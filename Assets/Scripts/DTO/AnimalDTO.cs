@@ -8,11 +8,13 @@ public class AnimalDTO
     public string Name;
     public string Rarity;
 
-    public AnimalDTO(AnimalClass animal)
+    public AnimalDTO() { }
+
+    public AnimalDTO(Animal animal)
     {
-        Id = animal.Id;
+        Id = animal.id;
         Level= animal.Level;
         Name = animal.Data.Name;
-        Rarity = animal.Rarity.ToString();
+        Rarity = animal.rarity.ToString();
     }
 }

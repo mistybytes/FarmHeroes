@@ -157,12 +157,21 @@ public class DataController : MonoBehaviour
             }
         }
 
-        foreach (AnimalClass animal in Inventory.Animals)
+        foreach (AnimalDTO animal in InventoryDTO.Animals)
         {
-            AnimalDTO animalDTO = InventoryDTO.Animals.FirstOrDefault(animalDTO => animal.Id.Equals(animalDTO.Id));
-            if (animalDTO != null)
+            foreach (AnimalSO animalS in Inventory.AnimalsSo)
             {
-                animal.Level = animalDTO.Level;
+                if (animalS.Name == animal.Name)
+                {
+                    GameObject newObject = new GameObject(animalS.Name);
+                    Animal newAnimal = newObject.AddComponent<Animal>();
+                    newAnimal.id = animal.Id;
+                    newAnimal.Energy = 0;
+                    newAnimal.Level = animal.Level;
+                    newAnimal.Data = animalS;
+                    newAnimal.rarity = stringToRarity(animal.Rarity);
+                    Inventory.Animals.Add(newAnimal);
+                }
             }
         }
     }

@@ -13,9 +13,4 @@ MonoBehaviour:
   m_Name: ChickenFarm
   m_EditorClassIdentifier: 
   Item: {fileID: 11400000, guid: fb505dc5edd3eb741a7540852a608841, type: 2}
-  Animals:
-  - {fileID: 11400000, guid: a4bbe3ea8cc7b534b88d276e635b7c33, type: 2}
-  - {fileID: 11400000, guid: 89a52371b2444b149bd17b20856e771c, type: 2}
-  - {fileID: 11400000, guid: 8b9b976becf2e7640a03697043daf2fc, type: 2}
-  - {fileID: 11400000, guid: fbde59105528ad240a68639f79993862, type: 2}
-  - {fileID: 11400000, guid: fd869424e94618e4195dee2b235dd28d, type: 2}
+  Animal: {fileID: 11400000, guid: c305628b435dae240afb5f21806142ba, type: 2}

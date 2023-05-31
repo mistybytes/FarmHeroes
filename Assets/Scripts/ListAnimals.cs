@@ -27,13 +27,16 @@ public class ListAnimals
     {
         CleanContent();
 
-        foreach (AnimalClass animal in Inventory.Animals)
+        foreach (Animal animal in Inventory.Animals)
         {
-            NewSlot(animal);
+            if (animal != null)
+            {
+                NewSlot(animal);
+            }
         }
     }
 
-    public void NewSlot(AnimalClass animal)
+    public void NewSlot(Animal animal)
     {
         GameObject obj = MonoBehaviour.Instantiate(InventoryItem, ItemContent);
 
@@ -51,7 +54,7 @@ public class ListAnimals
         Image backgraungImage = obj.transform.GetComponent<Image>();
 
 
-        backgraungImage.color = RarityToColor(animal.Rarity);
+        backgraungImage.color = RarityToColor(animal.rarity);
 
         animalName.text = animal.Data.Name;
         animalLevel.text = animal.Level.ToString();

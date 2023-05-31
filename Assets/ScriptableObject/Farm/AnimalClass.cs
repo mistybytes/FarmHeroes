@@ -1,7 +1,8 @@
 ﻿using System;
+using UnityEngine;
 
 [Serializable]
-public class AnimalClass
+public class AnimalClass : MonoBehaviour
 {
     public int Id;
 

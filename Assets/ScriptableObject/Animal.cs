@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
-[CreateAssetMenu(fileName = "New Animal", menuName = "Animal/Create New SpecificAnimal")]
-public class Animal : ScriptableObject
+public class Animal : MonoBehaviour
 { 
     public int id;
 

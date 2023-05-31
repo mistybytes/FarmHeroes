@@ -17,9 +17,12 @@ public class InventoryDTO
             Items.Add(itemDTO);
         }
         Currency = new CurrencyDTO(inventory.Currency);
-        foreach (AnimalClass animal in inventory.Animals)
+        foreach (Animal animal in inventory.Animals)
         {
-            Animals.Add(new AnimalDTO(animal));
+            if (animal != null)
+            {
+                Animals.Add(new AnimalDTO(animal));
+            }
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class FarmSO : ScriptableObject
 {
     public Item Item;
-    public List<Animal> Animals;
+    public AnimalSO Animal;
 
     [HideInInspector]
     public Dictionary<string, int> PlacedItems => PlacedItemsValues();

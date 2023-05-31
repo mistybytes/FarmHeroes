@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
 [CreateAssetMenu(fileName ="New Inventory", menuName ="Inventory/New Inventory")]
 public class Inventory : ScriptableObject
 {
-    
     public List<Item> Items;
-    public List<AnimalClass> Animals;
+    public List<Animal> Animals;
     public Currency Currency;
+    public List<AnimalSO> AnimalsSo;
 
     public Inventory (InventoryDTO inventoryDTO)
     {
@@ -32,8 +33,28 @@ public class Inventory : ScriptableObject
                 }
             }
         }
+        foreach (AnimalDTO animalDTO in inventoryDTO.Animals)
+        {
+            Animal animal = AnimalDTOToAnimal(animalDTO);
+            Animals.Add(animal);
+        }
+        Currency.Coin = inventoryDTO.Currency.Coin;
+        Currency.Diamond = inventoryDTO.Currency.Diamond;
     }
 
+    Animal AnimalDTOToAnimal(AnimalDTO animalDTO)
+    {
+        AnimalSO animalSO = AnimalsSo.FirstOrDefault(animal => animal.Name.Equals(animalDTO.Name));
+
+        return new Animal()
+        {
+            id = animalDTO.Id,
+            Data = animalSO,
+            Energy = 0,
+            Level = animalDTO.Level,
+            rarity = stringToRarity(animalDTO.Rarity),
+        };
+    }
 
     public Rarity stringToRarity(string sRarity)
     {
